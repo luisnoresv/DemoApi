@@ -10,9 +10,15 @@ using Microsoft.Extensions.Logging;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// builder.Services.AddDbContext<ApiContext>(opt =>
+// {
+//    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+// });
+
+// For MariaDB
 builder.Services.AddDbContext<ApiContext>(opt =>
 {
-   opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+   opt.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MariaDbServerVersion(new Version(5, 5, 5)));
 });
 
 builder.Services.AddControllers();
